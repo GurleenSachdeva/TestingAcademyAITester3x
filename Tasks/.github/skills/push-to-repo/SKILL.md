@@ -26,9 +26,10 @@ Automates the process of pushing code changes to a Git repository with proper co
 
 ### Quick Push (Recommended)
 1. Verify working tree is clean: `git status`
-2. Fetch latest remote changes: `git fetch origin`
-3. Rebase local commits on remote: `git pull origin <branch> --rebase`
-4. Push to remote: `git push origin <branch>`
+2. Generate or update README.md: `./scripts/generate-readme.sh`
+3. Fetch latest remote changes: `git fetch origin`
+4. Rebase local commits on remote: `git pull origin <branch> --rebase`
+5. Push to remote: `git push origin <branch>`
 
 ### Step-by-Step
 
@@ -40,12 +41,17 @@ Automates the process of pushing code changes to a Git repository with proper co
    - Run `git fetch origin` to get latest remote changes
    - This prevents push rejections due to remote updates
 
-3. **Sync Local Branch**
-   - Run `git pull origin <branch> --rebase`
+3. **Generate README**
+   - Run `./scripts/generate-readme.sh` to create/update README.md
+   - README includes repository info, structure, and recent commits
+   - Commit the README before pushing
+
+4. **Sync Local Branch**
+   - Run `git pull origin <branch> --rebase` 
    - Rebase keeps history clean without merge commits
    - Resolve any conflicts if they arise
 
-4. **Push Changes**
+5. **Push Changes**
    - Run `git push origin <branch>`
    - Confirm the push completed successfully
 
@@ -75,6 +81,22 @@ git log origin/main..HEAD
 # Then push
 git push origin main
 ```
+
+## Automated Push with README
+
+Use the provided helper script to automate the entire process:
+```bash
+./scripts/push-to-repo.sh [branch-name]
+```
+
+This script will:
+1. Check for uncommitted changes (stash if needed)
+2. Generate/update README.md
+3. Commit README changes
+4. Fetch latest remote changes
+5. Rebase on remote branch
+6. Push all changes to repository
+7. Restore any stashed changes
 
 ## Related References
 
